@@ -262,6 +262,8 @@ class Turning_bot: public Chatbot{ //#05
         std::string ansStr;
         int questionCount = 0;
 
+        cout << "~Starting Social Gathering: What to Consider bot~\n";
+
         cout << "Are you feeling sick?\nAnswer here: ";
         cin >> ansStr;
         ansLoop(ansStr);        
@@ -307,7 +309,20 @@ class Turning_bot: public Chatbot{ //#05
       }
 
       void higherRiskBubble(){
-        
+        std::string ansStr;
+
+        cout << "Do any group members have people at higher risk in their bubble?\nAnswer here: ";
+        cin >> ansStr;
+
+        if(checkYesNo(ansStr) == 'y'){
+          meetOutside();
+        }else if(checkYesNo(ansStr) == 'n'){
+          smallGroups();
+        }
+      }
+
+      void smallGroups(){
+        cout << "Enjoy your small group gathering.\nBe mindful of the golden rules:\n-physical distance\n-washing hands\n-keeping spaces clean\n~Ending questions~\n";
       }
 
       bool ansLoop(std::string ansStr){
