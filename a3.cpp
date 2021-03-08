@@ -8,6 +8,7 @@
 // Name : Alex Soames
 // St.# : 301 292 784
 // Email: asoames@sfu.ca
+// Git link: https://github.com/Duder5000/echo.git
 //
 //
 // Statement of Originality
@@ -174,21 +175,70 @@ class Datetime_bot: public Chatbot{ //#04
       }
 
       void tell(const string& s){
-        cout << s;
+        std::string str = s;
+        std::locale loc;
+
+        for (std::string::size_type i = 0; i < str.length(); i++){
+          str[i] = std::tolower(str[i],loc);
+        }       
+
+        if(findDateTime(str)){
+          cout << "Current time is: " << "\n";
+
+          std::string monthString[] = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+          std::string dayString[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+          int year, month, day, hour, mins, secs, weekDay;
+
+          getTm( year, month, day, hour, mins, secs, weekDay );
+          cout << "Date: " << dayString[weekDay] << ", " << day << " " << monthString[month] << " " << year << " @ " << hour << ":" << mins << ":" << secs << "\n";
+        }else{
+          cout << default_message << "\n";
+        }
+      }
+
+      bool findDateTime(std::string str){
+        //source: http://www.cplusplus.com/reference/string/string/find/
+        std::size_t found1 = str.find(DATE);
+        std::size_t found2 = str.find(TIME);
+        if (found1!=std::string::npos || found2!=std::string::npos){
+          return true;
+        }else{
+          return false;
+        }
       }
 
       std::string get_reply(){
         return "stuff!";
       } 
 
-      Datetime_bot(std::string n){
+      void getTm( int &year, int &month, int &day, int &hour, int &mins, int &secs, int &weekDay){
+        //source: http://cplusplus.com/forum/beginner/226899/
+         time_t tt;
+         time( &tt );
+         tm TM = *localtime( &tt );
+
+         year    = TM.tm_year + 1900;
+         month   = TM.tm_mon ;
+         day     = TM.tm_mday;
+         hour    = TM.tm_hour;
+         mins    = TM.tm_min ;
+         secs    = TM.tm_sec ;
+         weekDay = TM.tm_wday ;
+      }
+
+      Datetime_bot(std::string n, vector<std::string>  r){
         myName = n;
+        Random_bot rb("tempRandomBot", r);
+        default_message = rb.get_reply();
       }
 
       ~Datetime_bot(){}
       
   private:
     std::string myName = "";
+    std::string default_message = "";
+    const std::string DATE = "date";
+    const std::string TIME = "time";
 
 };
 
@@ -257,12 +307,12 @@ int main() {
   // cout << rb4.get_reply() << "\n";
 
   User_bot ub1("ub-one");
-  User_bot ub2("ub-two");
   // ub1.get_reply();
   // ub1.tell("stuff");
 
-  Datetime_bot db1("db-one");
-  Datetime_bot db2("db-two");
+  Datetime_bot db1("db-one", strVec1);
+  db1.tell("appleDaTe");
+  db1.tell("orange");
 
 
 
