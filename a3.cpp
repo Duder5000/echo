@@ -38,45 +38,69 @@
 
 using namespace std;
 
-class Mirror_bot{ //#01
+class Mirror_bot: public Chatbot{ //#01
+    
+  public:
+      std::string name() const{
+        return myName;
+      }
+
+      void tell(const string& s){
+        cout << s;
+      }
+
+      std::string get_reply(){
+        if(currentWords == ""){
+          currentWords = first_reply;
+        }
+        return currentWords;      
+      } 
+
+      Mirror_bot(std::string n, std::string fr){
+        myName = n;
+        first_reply = fr;
+      }
+
+      ~Mirror_bot(){ }
+
+  private:
+    std::string myName = "";
+    std::string currentWords = "";
+    std::string first_reply = "";
+
+};
+
+class Random_bot: public Chatbot{ //#02
     
   public:
       
   private:
 
-}
+};
 
-class Random_bot{ //#02
+class User_bot: public Chatbot{ //#03
     
   public:
       
   private:
 
-}
+};
 
-class User_bot{ //#03
+class Datetime_bot: public Chatbot{ //#04
     
   public:
       
   private:
 
-}
+};
 
-class Datetime_bot{ //#04
+class Turning_bot: public Chatbot{ //#05
     
   public:
       
   private:
 
-}
-
-class Turning_bot{ //#05
-    
-  public:
-      
-  private:
-
-}
+};
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // converse is a helper function that you can use if you like. You are free to
@@ -97,7 +121,30 @@ void converse(Chatbot* a, Chatbot* b, int max_turns = 50) {
   } // for
 }
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 int main() {
-  cout << "CMPT 135 - A03\nAlex Soames\n";
+  cout << "CMPT 135 - A03 | Alex Soames\n";
   
+  Mirror_bot mb1("apple", "first reply");
+  Mirror_bot mb2("orange", "first reply");
+
+  int max_turns  = 5;
+  for(int turn = 1; turn <= max_turns; turn++) {
+    string mb1_msg = mb1.get_reply();
+    cout << "(" << turn << ") " << mb1.name() << ": " << mb1_msg << "\n";
+    
+    turn++;
+    if (turn > max_turns){
+      cout << "end!\n";
+      break;
+    }
+
+    mb2.tell(mb1_msg);
+    string mb2_msg = mb2.get_reply();
+
+    cout << "(" << turn << ") " << mb2.name() << ": " << mb2_msg << "\n";
+    mb1.tell(mb2_msg);
+  }
+
 }
