@@ -123,9 +123,7 @@ class Random_bot: public Chatbot{ //#02
 
       Random_bot(std::string n, std::string fileName){
         myName = n;
-        randReplies = getLines(fileName);
-        
-
+        randReplies = getLines(fileName);       
       }
 
       ~Random_bot(){}
@@ -144,11 +142,16 @@ class User_bot: public Chatbot{ //#03
       }
 
       void tell(const string& s){
-        cout << s;
+        //maybe I'm missing something obvious, but I have no idea what I'm supposed to so with 's'
+        cout << "Passed in string: " << s << "\n";
+        cout << "Reply string: " << replyStr << "\n";
       }
 
       std::string get_reply(){
-        return "stuff!";
+        cout << "Enter a message: ";
+        cin >> replyStr;
+
+        return replyStr;
       } 
 
       User_bot(std::string n){
@@ -159,6 +162,7 @@ class User_bot: public Chatbot{ //#03
       
   private:
     std::string myName = "";
+    std::string replyStr = "";
 
 };
 
@@ -247,11 +251,18 @@ int main() {
   Random_bot rb2("re-two", strVec1);
   Random_bot rb3("re-two", TEST_FILE);
   Random_bot rb4("re-two", TEST_FILE);
-  cout << rb1.get_reply() << "\n";
-  cout << rb2.get_reply() << "\n";
-  cout << rb3.get_reply() << "\n";
-  cout << rb4.get_reply() << "\n";
+  // cout << rb1.get_reply() << "\n";
+  // cout << rb2.get_reply() << "\n";
+  // cout << rb3.get_reply() << "\n";
+  // cout << rb4.get_reply() << "\n";
 
+  User_bot ub1("ub-one");
+  User_bot ub2("ub-two");
+  // ub1.get_reply();
+  // ub1.tell("stuff");
+
+  Datetime_bot db1("db-one");
+  Datetime_bot db2("db-two");
 
 
 
