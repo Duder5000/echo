@@ -254,8 +254,99 @@ class Turning_bot: public Chatbot{ //#05
       }
 
       std::string get_reply(){
-        return "stuff!";
+        cin >> lastReply;
+        return lastReply;
       } 
+
+      void askAns(){
+        std::string ansStr;
+        int questionCount = 0;
+
+        cout << "Are you feeling sick?\nAnswer here: ";
+        cin >> ansStr;
+        ansLoop(ansStr);        
+        questionCount++;
+
+        if(checkYesNo(ansStr) == 'y'){
+          cout << "Stay home - no exception.\n~Ending questions~\n";
+        }else if(checkYesNo(ansStr) == 'n'){
+          bubble();
+        }
+      }
+
+      void bubble(){
+        std::string ansStr;
+
+        cout << "Can you keep your group limited to 2-6 people outside your bubble?\nAnswer here: ";
+        cin >> ansStr;
+
+        if(checkYesNo(ansStr) == 'y'){
+          highRisk();
+        }else if(checkYesNo(ansStr) == 'n'){
+          meetOutside();
+        }
+
+      }
+
+      void highRisk(){
+        std::string ansStr;
+
+        cout << "Is anyone in the group at higher risk for serious illness from COVID-19?\nAnswer here: ";
+        cin >> ansStr;
+
+        if(checkYesNo(ansStr) == 'y'){
+          meetOutside();
+        }else if(checkYesNo(ansStr) == 'n'){
+          higherRiskBubble();
+        }
+
+      }
+
+      void meetOutside(){
+        cout << "Meet outside or in bigger spaces. Limit your time together. Stay 2m apart. No handshakes, air hugs only!\n~Ending questions~\n";
+      }
+
+      void higherRiskBubble(){
+        
+      }
+
+      bool ansLoop(std::string ansStr){
+        bool cont = true;
+        bool r;
+        while(cont){
+          if(checkYesNo(ansStr) == 'y'){
+            cont = false;
+            r = true;
+          }else if(checkYesNo(ansStr) == 'n'){
+            cont = false;
+            r = false;
+          }else{
+            cout << "Please answer again. I only really understand \'yes\' and \'no\'";
+            cont = true;
+            cin >> ansStr;
+          }
+        }
+        return r;
+      }
+
+      char checkYesNo(std::string s){
+        std::string str = s;
+        std::locale loc;
+        std::size_t yes = str.find("yes");
+        std::size_t no = str.find("no");
+
+        for (std::string::size_type i = 0; i < str.length(); i++){
+          str[i] = std::tolower(str[i],loc);
+        } 
+
+        if (yes!=std::string::npos){
+          return 'y';
+        }else if(no!=std::string::npos){
+          return 'n';
+        }else{
+          return 'e';
+        }
+      }
 
       Turning_bot(std::string n){
         myName = n;
@@ -265,6 +356,8 @@ class Turning_bot: public Chatbot{ //#05
       
   private:
     std::string myName = "";
+    std::string lastReply = "";
+    vector<std::string> ansLog;
 
 };
 
@@ -311,28 +404,12 @@ int main() {
   // ub1.tell("stuff");
 
   Datetime_bot db1("db-one", strVec1);
-  db1.tell("appleDaTe");
-  db1.tell("orange");
+  // db1.tell("appleDaTe");
+  // db1.tell("orange");
+
+  Turning_bot covid("covidBot");
+  covid.askAns();
 
 
-
-
-  // int max_turns  = 5;
-  // for(int turn = 1; turn <= max_turns; turn++) {
-  //   string mb1_msg = mb1.get_reply();
-  //   cout << "(" << turn << ") " << mb1.name() << ": " << mb1_msg << "\n";
-    
-  //   turn++;
-  //   if (turn > max_turns){
-  //     cout << "end!\n";
-  //     break;
-  //   }
-
-  //   mb2.tell(mb1_msg);
-  //   string mb2_msg = mb2.get_reply();
-
-  //   cout << "(" << turn << ") " << mb2.name() << ": " << mb2_msg << "\n";
-  //   mb1.tell(mb2_msg);
-  // }
 
 }
