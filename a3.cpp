@@ -38,10 +38,47 @@
 
 using namespace std;
 
-//
-// ... write your code here here ...
-//
+class Mirror_bot{ //#01
+    
+  public:
+      
+  private:
 
+}
+
+class Random_bot{ //#02
+    
+  public:
+      
+  private:
+
+}
+
+class User_bot{ //#03
+    
+  public:
+      
+  private:
+
+}
+
+class Datetime_bot{ //#04
+    
+  public:
+      
+  private:
+
+}
+
+class Turning_bot{ //#05
+    
+  public:
+      
+  private:
+
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // converse is a helper function that you can use if you like. You are free to
 // modify it in any way.
 void converse(Chatbot* a, Chatbot* b, int max_turns = 50) {
@@ -61,5 +98,6 @@ void converse(Chatbot* a, Chatbot* b, int max_turns = 50) {
 }
 
 int main() {
-  cout << "CMPT 135 - A03\n";
+  cout << "CMPT 135 - A03\nAlex Soames\n";
+  
 }
